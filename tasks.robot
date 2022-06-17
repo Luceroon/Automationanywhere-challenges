@@ -17,8 +17,7 @@ Avaa nettisivu
     Login  
     ${Index}=    Set Variable    ${1}
     FOR    ${row}    IN    @{All_PO_numbers}
-        ${OrderData}=    Get input data    ${All_PO_numbers}    ${row}   
-        #${Inputs}=    Create inputs 
+        ${OrderData}=    Get input data    ${All_PO_numbers}    ${row}    
         Fill purchase orders    ${OrderData}    ${Index}  
         ${Index}=    Evaluate    ${Index}+1
     END
@@ -92,22 +91,4 @@ Fill purchase orders
     Input Text    css:#shipDate${Index}   ${OrderData1}[ShipDate]
 
     Input Text    css:#orderTotal${Index}   ${OrderData1}[OrderTotal]
-
-Create inputs
-    ${Inputs}=    Create List
-    ${AgentInputs}=    Create List    css:#agent1    css:#agent2    css:#agent3    css:#agent4    css:#agent5    css:#agent6    css:#agent7
-    ${ShipDateInputs}=    Create List    css:#shipDate1    css:#shipDate2    css:#shipDate3    css:#shipDate4    css:#shipDate5    css:#shipDate6    css:#shipDate7
-    ${OrderTotalInputs}=    Create List    css:#orderTotal1    css:#orderTotal2    css:#orderTotal3    css:#orderTotal4    css:#orderTotal5    css:#orderTotal6    css:#orderTotal7
-    FOR    ${Item1}    IN   @{AgentInputs}
-        Append To List    ${Inputs}    ${Item1}
-        BREAK
-    END
-    FOR    ${Item2}    IN   @{ShipDateInputs}
-        Append To List    ${Inputs}    ${Item2}
-        BREAK
-    END
-    FOR    ${Item3}    IN   @{OrderTotalInputs}
-        Append To List    ${Inputs}    ${Item3}
-        RETURN    ${Inputs}
-    END
 
