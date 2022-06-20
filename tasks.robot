@@ -7,6 +7,8 @@ Library    RPA.HTTP
 Library    RPA.Desktop
 Library    RPA.Excel.Files
 Library    String
+Library    RPA.Robocorp.Vault
+
 *** Variables ***
 
 *** Tasks ***
@@ -43,17 +45,18 @@ Get PO number
     RETURN   ${All_PO_numbers}
 
 Login
+     ${secret}=    Get Secret    credentials
     Open Chrome Browser    https://developer.automationanywhere.com/challenges/AutomationAnywhereLabs-POTrackingLogin.html    
     Sleep    1s
     ${Cookies}=    Does Page Contain Button    css:#onetrust-accept-btn-handler
     IF    ${Cookies} == True
         Click Button    css:#onetrust-accept-btn-handler
-        Input Text    css:#inputEmail    admin@procurementanywhere.com
-        Input Password    css:#inputPassword    paypacksh!p
+        Input Text    css:#inputEmail    ${secret}[username]
+        Input Password    css:#inputPassword    ${secret}[password]
         
     ELSE
-        Input Text    css:#inputEmail    admin@procurementanywhere.com
-        Input Password    css:#inputPassword    paypacksh!p
+        Input Text    css:#inputEmail    ${secret}[username]
+        Input Password    css:#inputPassword    ${secret}[password]
     END 
 
     Click Button    css:body > div.container > div > div > div > div > form > button.btn.btn-lg.btn-primary.btn-block.text-uppercase
